@@ -1,0 +1,22 @@
+// Fonction pour gérer les données GPS
+function onGPS(fix) {
+  if (fix.fix) {  // Si une position GPS a été obtenue
+    console.log("Latitude: " + fix.lat);
+    console.log("Longitude: " + fix.lon);
+    console.log("Altitude: " + fix.alt);
+    console.log("Vitesse: " + fix.speed);
+    console.log("Précision: " + fix.hdop);
+  } else {
+    console.log("Pas de position GPS fixée");
+  }
+}
+
+// Activer le GPS et définir un écouteur pour les événements GPS
+Bangle.setGPSPower(1);  // Allume le GPS
+Bangle.on('GPS', onGPS);
+
+// Désactiver le GPS après 10 minutes pour économiser la batterie
+setTimeout(function() {
+  Bangle.setGPSPower(0);  // Éteint le GPS
+  console.log("GPS éteint pour économiser la batterie");
+}, 10 * 60 * 1000);  // 10 minutes en millisecondes
